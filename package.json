@@ -1,0 +1,18 @@
+{
+  "homepage": "https://gitlab.com/SethFalco/nodejs-microbenchmarks",
+  "author": "Seth Falco",
+  "private": true,
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/SethFalco/nodejs-microbenchmarks.git"
+  },
+  "bugs": {
+    "url": "https://gitlab.com/SethFalco/nodejs-microbenchmarks/issues"
+  },
+  "type": "module",
+  "devDependencies": {
+    "benchmark": "^2.1.4",
+    "microtime": "^3.1.1"
+  }
+}

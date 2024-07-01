@@ -4,6 +4,21 @@ Just some benchmarks I've written during development both professionally and dur
 
 While the repository is public, the purpose is to share why I made certain decisions. This is not a collaborative effort to publish and maintain benchmarks together. If you're able to pitch a better solution to a problem covered in the repository, feel free to share it! However, pull requests adding benchmarks for new problems won't be accepted.
 
+## Running Benchmarks
+
+Install npm dependencies with:
+
+```sh
+npm i
+```
+
+Then run the relevant benchmark with Node.js:
+
+```sh
+BENCHMARK=is-string-whitespace
+node src/benchmarks/$BENCHMARK.js
+```
+
 ## Methodology
 
 All tests cases are constructed the same way and use the same options.

@@ -21,10 +21,23 @@ const data = [
 ];
 
 /** @type {Fn} */
-function splitAndFilter(viewbox) {
+function splitWithComplexRegexV2(viewbox) {
   return viewbox
-    .split(/(?:\s,?|,)\s*/g)
-    .filter(v => v.length != 0)
+    .split(/\b(?:\s+,?|\s*,)\s*(?=[^\s])/g)
+    .map(Number);
+};
+
+/** @type {Fn} */
+function splitWithComplexRegex(viewbox) {
+  return viewbox
+    .split(/\b(?:(?:\s+,?|\s*,)\s*)(?=[-.\d])/g)
+    .map(Number);
+};
+
+/** @type {Fn} */
+function splitWithComplexRegexV3(viewbox) {
+  return viewbox
+    .split(/\b(?:\s+,?|\s*,)\s*(?=\S)/g)
     .map(Number);
 };
 
@@ -37,39 +50,26 @@ function trimAndSplit(viewbox) {
 };
 
 /** @type {Fn} */
-function splitWithComplexRegex(viewbox) {
+function splitAndFilter(viewbox) {
   return viewbox
-    .split(/\b(?:(?:\s+,?|\s*,)\s*)(?=[-.\d])/g)
-    .map(Number);
-};
-
-/** @type {Fn} */
-function splitWithComplexRegexV2(viewbox) {
-  return viewbox
-    .split(/\b(?:\s+,?|\s*,)\s*(?=[^\s])/g)
-    .map(Number);
-};
-
-/** @type {Fn} */
-function splitWithComplexRegexV3(viewbox) {
-  return viewbox
-    .split(/\b(?:\s+,?|\s*,)\s*(?=\S)/g)
+    .split(/(?:\s,?|,)\s*/g)
+    .filter(v => v.length != 0)
     .map(Number);
 };
 
 areFunctionsEqual(
   data,
-  splitAndFilter,
-  trimAndSplit,
-  splitWithComplexRegex,
   splitWithComplexRegexV2,
-  splitWithComplexRegexV3
+  splitWithComplexRegex,
+  splitWithComplexRegexV3,
+  trimAndSplit,
+  splitAndFilter,
 );
 
 scaffoldBenchmark()
-  .add('split and filter', () => data.forEach(splitAndFilter))
-  .add('trim and split', () => data.forEach(trimAndSplit))
-  .add('split with complex regex v1', () => data.forEach(splitWithComplexRegex))
   .add('split with complex regex v2', () => data.forEach(splitWithComplexRegexV2))
+  .add('split with complex regex v1', () => data.forEach(splitWithComplexRegex))
   .add('split with complex regex v3', () => data.forEach(splitWithComplexRegexV3))
+  .add('trim and split', () => data.forEach(trimAndSplit))
+  .add('split and filter', () => data.forEach(splitAndFilter))
   .run(BENCHMARK_OPTIONS);

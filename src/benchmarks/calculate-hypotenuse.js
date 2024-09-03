@@ -29,17 +29,17 @@ function sqrt(dx, dy) {
 }
 
 /** @type {Fn} */
-function hypot(dx, dy) {
-  return Math.hypot(dx, dy);
-}
-
-/** @type {Fn} */
 function inverseSqrt(dx, dy) {
   return (dx ** 2 + dy ** 2) ** 0.5;
 }
 
+/** @type {Fn} */
+function hypot(dx, dy) {
+  return Math.hypot(dx, dy);
+}
+
 scaffoldBenchmark()
   .add('sqrt', () => data.forEach(([dx, dy]) => sqrt(dx, dy)))
-  .add('hypot', () => data.forEach(([dx, dy]) => hypot(dx, dy)))
   .add('inverse sqrt', () => data.forEach(([dx, dy]) => inverseSqrt(dx, dy)))
+  .add('hypot', () => data.forEach(([dx, dy]) => hypot(dx, dy)))
   .run(BENCHMARK_OPTIONS);

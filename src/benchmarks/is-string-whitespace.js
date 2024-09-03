@@ -24,6 +24,16 @@ const data = [
 ];
 
 /** @type {Fn} */
+function stringLiterals(c) {
+  return (
+    c === ' ' ||
+    c === '\t' ||
+    c === '\r' ||
+    c === '\n'
+  );
+};
+
+/** @type {Fn} */
 function codePoints(c) {
   const codePoint = c.codePointAt(0);
   return (
@@ -34,14 +44,10 @@ function codePoints(c) {
   );
 };
 
+const set = new Set([' ', '\t', '\r', '\n']);
 /** @type {Fn} */
-function stringLiterals(c) {
-  return (
-    c === ' ' ||
-    c === '\t' ||
-    c === '\r' ||
-    c === '\n'
-  );
+function inSet(c) {
+  return set.has(c);
 };
 
 const str = ' \t\r\n';
@@ -49,12 +55,6 @@ const str = ' \t\r\n';
 function bitwiseIndex(c) {
   return !!~str.indexOf(c);
 }
-
-const set = new Set([' ', '\t', '\r', '\n']);
-/** @type {Fn} */
-function inSet(c) {
-  return set.has(c);
-};
 
 const pattern = /^[ \t\r\n]$/;
 /** @type {Fn} */
@@ -64,17 +64,17 @@ function regex(c) {
 
 areFunctionsEqual(
   data,
-  codePoints,
   stringLiterals,
-  bitwiseIndex,
+  codePoints,
   inSet,
+  bitwiseIndex,
   regex
 );
 
 scaffoldBenchmark()
-  .add('code points', () => data.forEach(codePoints))
   .add('string literals', () => data.forEach(stringLiterals))
-  .add('bitwise index', () => data.forEach(bitwiseIndex))
+  .add('code points', () => data.forEach(codePoints))
   .add('in set', () => data.forEach(inSet))
+  .add('bitwise index', () => data.forEach(bitwiseIndex))
   .add('regex', () => data.forEach(regex))
   .run(BENCHMARK_OPTIONS);

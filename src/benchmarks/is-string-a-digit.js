@@ -17,17 +17,6 @@ const data = [
   '.',
 ];
 
-const DIGITS = '0123456789';
-/** @type {Fn} */
-function stringIncludes(c) {
-  return DIGITS.includes(c);
-}
-
-/** @type {Fn} */
-function betweenChars(c) {
-  return c >= '0' && c <= '9';
-}
-
 /** @type {Fn} */
 function betweenCodePoints(c) {
   const codePoint = c.codePointAt(0);
@@ -37,15 +26,26 @@ function betweenCodePoints(c) {
   return 48 <= codePoint && codePoint <= 57;
 }
 
+/** @type {Fn} */
+function betweenChars(c) {
+  return c >= '0' && c <= '9';
+}
+
+const DIGITS = '0123456789';
+/** @type {Fn} */
+function stringIncludes(c) {
+  return DIGITS.includes(c);
+}
+
 areFunctionsEqual(
   data,
-  stringIncludes,
+  betweenCodePoints,
   betweenChars,
-  betweenCodePoints
+  stringIncludes,
 );
 
 scaffoldBenchmark()
-  .add('string includes', () => data.forEach(stringIncludes))
-  .add('between chars', () => data.forEach(betweenChars))
   .add('between code points', () => data.forEach(betweenCodePoints))
+  .add('between chars', () => data.forEach(betweenChars))
+  .add('string includes', () => data.forEach(stringIncludes))
   .run(BENCHMARK_OPTIONS);

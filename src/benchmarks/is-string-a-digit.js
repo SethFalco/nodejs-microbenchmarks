@@ -37,15 +37,22 @@ function stringIncludes(c) {
   return DIGITS.includes(c);
 }
 
+/** @type {Fn} */
+function checkIfNan(c) {
+  return !isNaN(parseInt(c));
+}
+
 areFunctionsEqual(
   data,
   betweenCodePoints,
   betweenChars,
   stringIncludes,
+  checkIfNan,
 );
 
 scaffoldBenchmark()
   .add('between code points', () => data.forEach(betweenCodePoints))
   .add('between chars', () => data.forEach(betweenChars))
   .add('string includes', () => data.forEach(stringIncludes))
+  .add('check if nan', () => data.forEach(checkIfNan))
   .run(BENCHMARK_OPTIONS);
